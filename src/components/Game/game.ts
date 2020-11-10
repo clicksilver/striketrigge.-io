@@ -1,26 +1,25 @@
 import { Ctx, Game } from "boardgame.io";
-import { G, MatchResult } from "./types";
+import { GameState, MatchResult } from "./types";
 
-const setup = (): G => {
-  let scores = new Map<string, number>();
-  scores.set("0", 0);
-  scores.set("1", 0);
-  return { scores };
+const setup = (): GameState => {
+  var G: GameState = { scores: { '0': 0, '1': 0 } };
+  return G;
 };
 
-const rollDice = (G: G, ctx: Ctx) => {
+const rollDice = (G: GameState, ctx: Ctx) => {
   const player = ctx.currentPlayer as string;
   const value = Math.floor(Math.random() * Math.floor(6));
-  let score = G.scores.get(player);
+  console.log("Player " + player + " rolled a " + value);
+  let score = G.scores[player] as number;
   score = (score === undefined ? 0 : score) + value;
-  console.log("Player " + player + " rolled a " + value + "(score: " + score + ")")
-  G.scores.set(player, score);
+  console.log("Player " + player + " score: " + score);
+  G.scores[player] = score;
 };
 
-const endIf = (G: G, ctx: Ctx): MatchResult | void => {
+const endIf = (G: GameState, ctx: Ctx): MatchResult | void => {
   const players = ["0", "1"];
   for (const player of players) {
-    let score = G.scores.get(player);
+    let score = G.scores.player;
     if (score !== undefined && score > 10) {
       return { winner: player };
     }
@@ -28,7 +27,7 @@ const endIf = (G: G, ctx: Ctx): MatchResult | void => {
 };
 
 /** Represents a game. */
-export const game: Game<G, Ctx> = {
+export const game: Game<GameState, Ctx> = {
   name: "game",
   setup: setup,
   moves: { rollDice },
