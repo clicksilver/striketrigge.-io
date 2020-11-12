@@ -3,13 +3,12 @@ import { BoardProps } from "boardgame.io/react";
 import { GameState } from "./types";
 
 interface LocalBoardProps extends BoardProps {
-  G: GameState
+  G: GameState;
 }
 
 const Board = ({G, ctx, moves, isActive}: LocalBoardProps) => {
   const player = ctx.currentPlayer;
   const result = ctx.gameover;
-  // const scores = G.scores;
 
   return (
     <div>
