@@ -1,8 +1,8 @@
 import React from "react";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import Board from "./board";
-import { game } from "./game";
+import MyBoard from "./board";
+import MyGame from "./game";
 
 interface MultiplayerProps {
   serverURL: string;
@@ -18,8 +18,8 @@ const Multiplayer = ({
   credentials,
 }: MultiplayerProps) => {
   const MultiplayerClient = Client({
-    game,
-    board: Board,
+    game: MyGame,
+    board: MyBoard,
     multiplayer: SocketIO({ server: serverURL }),
     numPlayers: 2,
     debug: true,

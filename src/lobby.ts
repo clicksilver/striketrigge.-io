@@ -2,7 +2,7 @@
  * This module follows the API schema from: https://boardgame.io/documentation/#/api/Lobby
  */
 
-import { game } from "./components/Game/game";
+import MyGame from "./components/Game/game";
 
 /** Represents a match. */
 export interface Match {
@@ -20,7 +20,7 @@ const headers = {
 export const createMatch = async (
   serverURL: string
 ): Promise<string> => {
-  const resp = await fetch(`${serverURL}/games/${game.name}/create`, {
+  const resp = await fetch(`${serverURL}/games/${MyGame.name}/create`, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -45,7 +45,7 @@ export const joinMatch = async (
   matchID: string,
   player: number
 ): Promise<string> => {
-  const resp = await fetch(`${serverURL}/games/${game.name}/${matchID}/join`, {
+  const resp = await fetch(`${serverURL}/games/${MyGame.name}/${matchID}/join`, {
     method: "POST",
     headers,
     body: JSON.stringify({ playerID: player, playerName: player.toString() }),
@@ -68,7 +68,7 @@ export const leaveMatch = async (
   player: number,
   credentials: string
 ): Promise<void> => {
-  const resp = await fetch(`${serverURL}/games/${game.name}/${matchID}/leave`, {
+  const resp = await fetch(`${serverURL}/games/${MyGame.name}/${matchID}/leave`, {
     method: "POST",
     headers,
     body: JSON.stringify({ playerID: player, credentials }),
@@ -82,7 +82,7 @@ export const leaveMatch = async (
 export const listMatchIDs = async (
   serverURL: string
 ): Promise<Array<string>> => {
-  const resp = await fetch(`${serverURL}/games/${game.name}`);
+  const resp = await fetch(`${serverURL}/games/${MyGame.name}`);
   if (!resp.ok) {
     throw new Error("failed to list match IDs: " + (await resp.text()));
   }
@@ -102,7 +102,7 @@ export const getMatch = async (
   serverURL: string,
   matchID: string
 ): Promise<Match> => {
-  const resp = await fetch(`${serverURL}/games/${game.name}/${matchID}`);
+  const resp = await fetch(`${serverURL}/games/${MyGame.name}/${matchID}`);
   if (!resp.ok) {
     throw new Error("failed to get match: " + (await resp.text()));
   }

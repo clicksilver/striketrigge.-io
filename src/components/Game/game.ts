@@ -27,10 +27,12 @@ const endIf = (gameState: GameState, ctx: Ctx): MatchResult | void => {
 };
 
 /** Represents a game. */
-export const game: Game<GameState, Ctx> = {
+const MyGame: Game<GameState, Ctx> = {
   name: "game",
   setup: setup,
   moves: { rollDice },
   turn: { moveLimit: 1 },
   endIf: endIf,
 };
+
+export default MyGame;

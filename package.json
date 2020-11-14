@@ -21,9 +21,10 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:app": "react-scripts build",
     "build:server": "tsc -p tsconfig.server.json",
+    "build": "npm run build:app && npm run build:server",
+    "start:app": "react-scripts start",
     "start:server": "node -r esm build/server/server.js"
   },
   "eslintConfig": {
