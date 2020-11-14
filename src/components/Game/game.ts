@@ -8,7 +8,7 @@ const setup = (): GameState => {
 
 const rollDice = (gameState: GameState, ctx: Ctx) => {
   const player = ctx.currentPlayer as string;
-  const value = Math.floor(Math.random() * Math.floor(6));
+  const value = ctx.random!.D6();
   console.log("Player " + player + " rolled a " + value);
   let score = gameState.scores[player] as number;
   score = (score === undefined ? 0 : score) + value;
