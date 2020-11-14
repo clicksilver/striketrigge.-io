@@ -19,7 +19,7 @@ const rollDice = (gameState: GameState, ctx: Ctx) => {
 const endIf = (gameState: GameState, ctx: Ctx): MatchResult | void => {
   const players = ["0", "1"];
   for (const player of players) {
-    let score = gameState.scores.player;
+    let score = gameState.scores[player];
     if (score !== undefined && score > 10) {
       return { winner: player };
     }
