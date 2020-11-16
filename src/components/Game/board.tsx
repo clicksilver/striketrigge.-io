@@ -11,11 +11,11 @@ const MyBoard = ({G, ctx, moves, isActive}: BoardProps<GameState>) => {
     <div>
       <div className="row flex-center">
         <div className="col no-padding">
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "left" }}>
             { result ? (
               <p>{result.winner} wins!</p>
             ) : (
-              <p>{player} turn</p>
+              <p>Player {player}'s turn</p>
             )}
             <p>Player 0 score: { scores ? (scores['0']) : '-' }</p>
             <p>Player 1 score: { scores ? (scores['1']) : '-' }</p>

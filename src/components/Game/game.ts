@@ -11,7 +11,7 @@ const rollDice = (gameState: GameState, ctx: Ctx) => {
   const value = ctx.random!.D6();
   console.log("Player " + player + " rolled a " + value);
   let score = gameState.scores[player] as number;
-  score = (score === undefined ? 0 : score) + value;
+  score = score + value;
   console.log("Player " + player + " score: " + score);
   gameState.scores[player] = score;
 };
@@ -19,8 +19,8 @@ const rollDice = (gameState: GameState, ctx: Ctx) => {
 const endIf = (gameState: GameState, ctx: Ctx): MatchResult | void => {
   const players = ["0", "1"];
   for (const player of players) {
-    let score = gameState.scores[player];
-    if (score !== undefined && score > 10) {
+    let score = gameState.scores[player] as number;
+    if (score > 10) {
       return { winner: player };
     }
   }
