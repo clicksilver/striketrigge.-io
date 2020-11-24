@@ -22,8 +22,15 @@ export interface GameCell {
 export interface GameState {
   scores: Record<string, number>;
   cells: Array<GameCell>; 
+  // player_pos[player] = cell_index
+  player_pos: number[];
 }
 
 export interface MatchResult {
   winner: string;
+}
+
+export interface MapCoord {
+  x: number;
+  y: number;
 }
