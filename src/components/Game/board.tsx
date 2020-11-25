@@ -10,26 +10,6 @@ const cell_width = 200;
 const cell_height = 75;
 const padding = 5;
 
-function getCellContents(
-  states: CellStates[], 
-  players: number[]): {
-    states: string, 
-    players: string
-  } {
-  var state_str: string = '';
-  states.forEach((s, i) => {
-    state_str += `${s}` + (i === states.length-1 ? '' : ', '); 
-  })
-  var player_str: string = '';
-  players.forEach((p, i) => {
-    player_str += `${p}` + (i === players.length-1 ? '' : ',');
-  })
-  return {
-    states: state_str,
-    players: player_str
-  };
-}
-
 function createDisplay(G: GameState): JSX.Element {
   function createDisplayCell(game_cell: GameCell): JSX.Element {
     const coord = indexToCoord(game_cell.id) as MapCoord;
@@ -41,7 +21,6 @@ function createDisplay(G: GameState): JSX.Element {
     //   8
     const num_row_cells = 3 - Math.abs(coord.x - 2);
     const leftmost_edge = (map_width - num_row_cells * (cell_width + padding)) / 2;
-    const statesAndPlayers = getCellContents(game_cell.states, game_cell.players);
     return <div style={{
                   border: '1px solid black',
                   lineHeight: 0,
@@ -54,8 +33,8 @@ function createDisplay(G: GameState): JSX.Element {
                 }}
                 key={game_cell.id}>
               <p>Cell: {game_cell.id}</p>
-              <p>States: {statesAndPlayers.states}</p>
-              <p>Player: {statesAndPlayers.players}</p>
+              <p>States: {game_cell.states.toString()}</p>
+              <p>Player: {game_cell.players.toString()}</p>
             </div>;
   };
   return <div style={{
