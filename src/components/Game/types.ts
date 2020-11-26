@@ -13,11 +13,6 @@ export enum CellStates {
   BLU_ZONE
 };
 
-export enum ActionType {
-  NONE,
-  MOVE,
-};
-
 export interface GameCell {
   id: number;
   players: number[];
