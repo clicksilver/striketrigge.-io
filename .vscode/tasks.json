@@ -3,24 +3,33 @@
 	"tasks": [
 		{
 			"label": "build-dev",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"dependsOn": [
 				"build-server",
-				"build-app",
-			]
+				"build-app"
+			],
+			"problemMatcher": []
 		},
 		{
 			"type": "npm",
 			"script": "build:app",
-			"label": "build-app",
+			"label": "build-app"
 		},
 		{
 			"type": "npm",
 			"script": "build:server",
-			"label": "build-server",
+			"label": "build-server"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build",
+			"detail": "npm run build:app && npm run build:server"
 		}
 	]
 }
