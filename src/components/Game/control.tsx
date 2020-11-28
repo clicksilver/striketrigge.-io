@@ -3,9 +3,10 @@ import { ActionType } from "./actions";
 
 interface ControlsProps {
   setAction: ((action: ActionType) => void);
+  onConfirm: (() => void);
 }
 
-const Controls = ({setAction}: ControlsProps) => {
+const Controls = ({setAction, onConfirm}: ControlsProps) => {
   return (
     <div>
       <div>
@@ -14,7 +15,7 @@ const Controls = ({setAction}: ControlsProps) => {
         </button>
       </div>
       <div>
-        <button type="button">
+        <button type="button" onClick={onConfirm}>
           Confirm
         </button>
       </div>

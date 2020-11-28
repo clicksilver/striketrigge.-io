@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import { GameState, MapCoord } from "./types";
+import React from "react";
+import { GameCell, MapCoord } from "./types";
 import { indexToCoord } from "./logic";
-import Controls from "./control";
-import { ActionContext, ActionType, canDispatchAction, updateActionContext } from "./actions";
+import { ActionContext, ActionType } from "./actions";
+import { getCellStyle } from "./action_helpers";
 
 // Map Rendering parameters
 const map_width = 700;
@@ -12,49 +12,21 @@ const cell_height = 75;
 const padding = 5;
 
 interface DisplayProps {
-  G: GameState;
+  game_cells: GameCell[];
+  onSelectCell: (cell_id: number) => void;
+  action: ActionType,
+  action_context: ActionContext,
 }
 
-const Display = ({G}: DisplayProps) => {
-  var [selected_cell, setSelectedCell] = useState<number | undefined>();
-  // var [selected_token, setSelectedToken] = useState<string | undefined>();
-  var [action, setAction] = useState(ActionType.NONE);
-  var [action_ctx, setActionContext] = useState<ActionContext>({});
-  
-  const onSelectCell = (cell_id: number) => {
-    console.log(`cell ${cell_id} clicked`);
-    if (selected_cell && selected_cell === cell_id) {
-      console.log('deselected');
-      setSelectedCell(undefined);
-    } else {
-      console.log('selected');
-      setSelectedCell(cell_id);
-    }
-    setActionContext(updateActionContext(action, action_ctx, cell_id));
-  };
-
-  if (canDispatchAction(action, action_ctx)) {
-    alert("Action Dispatched!");
-    setActionContext({});
-  }
-
-  // const onSelectToken = (token_id: string) {
-  //   if (selected_token && selected_token == token_id) {
-  //     setSelectedToken(undefined);
-  //   } else {
-  //     setSelectedToken(token_id);
-  //   }
-  // };
-
+const Display = ({game_cells, onSelectCell, action, action_context}: DisplayProps) => {
   return (
-    <div>
       <div style={{
             width: map_width + 'px',
             height: map_height + 'px',
             position: 'relative',
           }}>
         { 
-          G.cells.map((game_cell) => {
+          game_cells.map((game_cell) => {
             const coord = indexToCoord(game_cell.id) as MapCoord;
             // Tile the map cells:
             //   0
@@ -66,7 +38,7 @@ const Display = ({G}: DisplayProps) => {
             const leftmost_edge = (map_width - num_row_cells * (cell_width + padding)) / 2;
             return (
               <div style = {{
-                border: '1px solid black',
+                    border: '1px solid black',
                     lineHeight: 0,
                     textIndent: 5,
                     width: cell_width + 'px',
@@ -74,6 +46,7 @@ const Display = ({G}: DisplayProps) => {
                     position: 'absolute',
                     left: (leftmost_edge + coord.y * (cell_width + padding)) + 'px',
                     top: (padding + coord.x * (cell_height + padding)) + 'px',
+                    ...getCellStyle(action, action_context, game_cell.id),
                   }}
                   key={game_cell.id}
                   onClick={() => onSelectCell(game_cell.id)}>
@@ -85,8 +58,6 @@ const Display = ({G}: DisplayProps) => {
           })
         }
       </div>
-      <Controls setAction={(action: ActionType) => { setAction(action); }} />
-    </div>
   );
 }
 
